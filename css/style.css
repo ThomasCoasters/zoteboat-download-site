@@ -95,6 +95,8 @@ input[type="reset"] {
 
 .button-pointer {
     position: absolute;
+    display: block;
+    z-index: 2;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;

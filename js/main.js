@@ -21,17 +21,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function buttons_hover_setup() {
-  for (const button of buttons) {
-    button.addEventListener('mouseenter', function() {
-        const audio = new Audio('audio/ui change selection.wav');
-        audio.play();
-        show_button_pointers(this);
-    });
+  const supportsPointerEvents = 'PointerEvent' in window;
 
-    button.addEventListener('mouseleave', function() {
-        remove_button_pointers(this);
-    });
+  for (const button of buttons) {
+    if (supportsPointerEvents) {
+        button.addEventListener('pointerenter', function() {
+            show_button_pointers(this);
+            play_ui_hover_audio();
+        });
+
+        button.addEventListener('pointerleave', function() {
+            remove_button_pointers(this);
+        });
+    } else {
+        button.addEventListener('mouseenter', function() {
+            show_button_pointers(this);
+            play_ui_hover_audio();
+        });
+
+        button.addEventListener('mouseleave', function() {
+            remove_button_pointers(this);
+        });
+    }
   }
+}
+
+
+function play_ui_hover_audio() {
+        const audio = new Audio('audio/ui change selection.wav');
+        const playPromise = audio.play();
+
+        if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch(() => {});
+        }
 }
 
 
@@ -192,9 +214,13 @@ function setup_audio_start_on_interaction() {
         document.removeEventListener('click', startAudio);
         document.removeEventListener('keydown', startAudio);
         document.removeEventListener('touchstart', startAudio);
+        document.removeEventListener('pointerdown', startAudio);
+        document.removeEventListener('mousedown', startAudio);
     };
 
     document.addEventListener('click', startAudio, { once: true });
     document.addEventListener('keydown', startAudio, { once: true });
     document.addEventListener('touchstart', startAudio, { once: true });
+    document.addEventListener('pointerdown', startAudio, { once: true });
+    document.addEventListener('mousedown', startAudio, { once: true });
 }
