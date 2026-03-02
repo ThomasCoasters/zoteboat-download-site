@@ -13,11 +13,11 @@ const pointerSpriteMetrics = {
 
 const buttons = document.getElementsByClassName('text-button');
 
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', () => {
     setup_pointer_sprite_metrics();
     page_just_loaded();
     buttons_hover_setup();
-}
+});
 
 
 function buttons_hover_setup() {
@@ -141,7 +141,11 @@ async function page_just_loaded() {
         overlay.style.transition = "all 0.35s ease";
     }
 
-    setup_audio_start_on_interaction();
+    const hasAutoplayStarted = await background_music_play();
+
+    if (!hasAutoplayStarted) {
+        setup_audio_start_on_interaction();
+    }
 
 
     await delay(1000);
@@ -155,7 +159,7 @@ function delay(ms) {
 
 function background_music_play() {
     if (hasStartedAudio) {
-        return;
+        return Promise.resolve(true);
     }
 
     if (!backgroundAudio) {
@@ -166,14 +170,19 @@ function background_music_play() {
     const playPromise = backgroundAudio.play();
 
     if (playPromise) {
-        playPromise
+        return playPromise
             .then(() => {
                 hasStartedAudio = true;
+                return true;
             })
             .catch(() => {
                 hasStartedAudio = false;
+                return false;
             });
     }
+
+    hasStartedAudio = !backgroundAudio.paused;
+    return Promise.resolve(hasStartedAudio);
 }
 
 
