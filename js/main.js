@@ -1,6 +1,6 @@
 let backgroundAudio = null;
 let hasStartedAudio = false;
-const POINTER_SPRITE_PATH = '../images/pointer.webp';
+const POINTER_SPRITE_PATH = 'images/pointer.webp';
 const POINTER_TOTAL_FRAMES = 11;
 const POINTER_COLUMNS = 5;
 const POINTER_ROWS = 3;
