@@ -58,6 +58,13 @@ a {
     gap: 25%;
 }
 
+.download_screen_buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 40vh;
+    gap: 15%;
+}
 
 .title-image {
     width: 130%;
