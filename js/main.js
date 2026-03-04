@@ -138,39 +138,19 @@ function set_pointer_frame(pointerElement, frameIndex) {
 
 
 async function go_to_link(location) {
-    const overlay = document.getElementById('overlay');
-
-    if (overlay) {
-        overlay.style.zIndex = 99999;
-        overlay.style.opacity = 1;
-    }
-
     const audio = new Audio('audio/ui button confirm.wav');
     audio.play();
-    
-    await delay(1000);
 
     window.location.href = location+".html";
 }
 
 
 async function page_just_loaded() {
-    const overlay = document.getElementById('overlay');
-
-    if (overlay) {
-        overlay.style.zIndex = -10;
-        overlay.style.opacity = 0;
-        overlay.style.transition = "all 0.35s ease";
-    }
-
     const hasAutoplayStarted = await background_music_play();
 
     if (!hasAutoplayStarted) {
         setup_audio_start_on_interaction();
     }
-
-
-    await delay(1000);
 }
 
 
