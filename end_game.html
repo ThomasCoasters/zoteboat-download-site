@@ -6,8 +6,41 @@
 	<title>Zoteboat</title>
 	<link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="images/Zote shell.ico">
+	<style>
+		.audio-control {
+			position: fixed;
+			right: 1rem;
+			bottom: 1rem;
+			z-index: 10;
+			padding: 0.5rem 1rem;
+            color: grey;
+		}
+	</style>
 </head>
 <body>
-    <video src="images\Screen Recording 2026-03-05 203654.mp4" autoplay></video>
+	<video id="endGameVideo" src="images/Screen Recording 2026-03-05 203654.mp4" autoplay muted playsinline></video>
+	<button id="audioControl" class="text-button audio-control" type="button" aria-label="Toggle audio">Unmute</button>
+
+	<script>
+		const endGameVideo = document.getElementById("endGameVideo");
+		const audioControl = document.getElementById("audioControl");
+
+		async function startVideoMuted() {
+			endGameVideo.muted = true;
+			try {
+				await endGameVideo.play();
+			} catch {}
+		}
+
+		audioControl.addEventListener("click", async () => {
+			endGameVideo.muted = !endGameVideo.muted;
+			audioControl.textContent = endGameVideo.muted ? "Unmute" : "Mute";
+			try {
+				await endGameVideo.play();
+			} catch {}
+		});
+
+		startVideoMuted();
+	</script>
 </body>
 </html>
