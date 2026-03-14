@@ -6,7 +6,6 @@
     -webkit-user-select: none;
     -ms-user-select: none;
     cursor: url(../images/Cursor.png), auto;
-    overflow: auto; /* Enables scrolling */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;
 }
@@ -35,6 +34,7 @@ body {
     font-family: zoteboat_font;
     color: white;
     line-height: 1.5;
+    background-color: rgb(186, 155, 78);
     background-image: url(../images/menu_theme.png);
     background-size: cover;
     background-repeat: no-repeat;
